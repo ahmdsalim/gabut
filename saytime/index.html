@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Say Time</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<style type="text/css">
+
+		@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@800&display=swap');
+
+		body {
+			margin: 0;
+			padding: 0;
+			display: grid;
+			justify-content: center;
+			align-items: center;
+			background: #ddd;
+			transition: all 155ms ease-in-out;
+		}
+
+		#app {
+			display: grid;
+			justify-content: center;
+			align-items: center;
+			min-height: 90vh;
+			text-align: center;
+		}
+
+		#typed {
+			font-weight: bold;
+			font-family: 'Nunito', sans-serif;
+			font-size: 29px;
+		}
+
+		footer {
+			display: grid;
+			margin-top: 1em;
+			width: 100%;
+		}
+
+		footer center span {
+			font-size: 15px;
+			font-family: 'Arial';
+		}
+	</style>
+</head>
+<body>
+	<div id="app">
+		<span id="typed"></span>
+	</div>
+	<footer>
+		<center>
+			<span id="ft">&copy;Copyright 2020 created by Ahmad</span>
+		</center>
+	</footer>
+	<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script>
+	<script type="text/javascript">
+		let name = localStorage.name || '' //init var nama
+		if(window.location.search.substr(1) != '') { //if dpt nama
+			name = window.location.search.substr(1) //isi var nama dari local
+			localStorage.name = window.location.search.substr(1)
+		}
+		let tema = {
+			pagi: {
+				text: '#fff'
+			},
+			sore: {
+				text: '#fff'
+			},
+			malam: {
+				text: '#fff'
+			},
+		}
+
+		let night_trans = {
+			6: {
+				body: '#01426d'
+			},
+			5: {
+				body: '#003a63'
+			},
+			4: {
+				body: '#013155'
+			},
+			3: {
+				body: '#002746'
+			},
+			2: {
+				body: '#001d37'
+			},
+			1: {
+				body: '#01162e'
+			}
+		}
+
+		let mrg_trans = {
+			4: {
+				body: '#01426d'
+			},
+			3: {
+				body: '#3854bd'
+			},
+			2: {
+				body: '#4076d9'
+			},
+			1: {
+				body: '#38a6d9'
+			}
+		}
+
+		let aft_trans = {
+			2: {
+				body: '#ffb88c'
+			},
+			1: {
+				body: '#de6262'
+			}
+		}
+
+		let now = '';
+		let to = 6;
+
+		const typed = new Typed('#typed', {
+			strings: [''],
+			typeSpeed: 60,
+			showCursor: false
+		})
+
+		function change() {
+			let oldName = decodeURIComponent(name).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '$quot;')
+			const type = 'Selamat ' + now.slice(0, 1).toUpperCase() + now.slice(1) + ' ' + oldName.slice(0, 1).toUpperCase() + oldName.slice(1)
+			tmpNow = now == 'siang' ? 'pagi' : now
+			if(tmpNow == 'malam'){
+				night_effct()
+			}
+			else if(tmpNow == 'sore'){
+				to = 2
+				aft_effct()
+			}
+			else if(tmpNow == 'pagi'){
+				to = 4
+				mrg_effct()
+			}
+			document.querySelector('#typed').style.color = tema[tmpNow].text
+			document.querySelector('#ft').style.color = tema[tmpNow].text
+			typed.strings = [type]
+			document.title = type
+			typed.reset(1)
+		}
+
+		function night_effct() {
+			document.body.style.background = night_trans[to].body
+			to--
+			if(to > 0){
+				setTimeout(() => {
+					night_effct()
+				},166)
+			}
+		}
+
+		function aft_effct() {
+			document.body.style.background = aft_trans[to].body
+			to--
+			if(to > 0){
+				setTimeout(() => {
+					aft_effct()
+				},200)
+			}
+		}
+
+		function mrg_effct() {
+			document.body.style.background = mrg_trans[to].body
+			to--
+			if(to > 0){
+				setTimeout(() => {
+					mrg_effct()
+				},166)
+			}
+		}
+
+		setInterval(() => {
+			const d = new Date()
+			const tm = d.getHours()
+			const old = now
+			if(tm >= 6 && tm < 12){
+				now = 'pagi'
+			}
+			else if(tm >= 12 && tm < 15){
+				now = 'siang'
+			}
+			else if(tm >= 15 && tm < 18){
+				now = 'sore'
+			}
+			else if(tm >= 18 && tm <= 24 || tm < 6){
+				now = 'malam'
+			}
+
+			old != now ? change() : ''
+		}, 150)
+	</script>
+</body>
+</html>
