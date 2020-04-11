@@ -107,7 +107,7 @@
 	<script type="text/javascript">
 
 		const dl = new Date("2020-04-24").getTime()
-		let to = 4
+		let to = 3
 		function countDif(remains) {
 			const days = Math.floor(remains / (1000 * 60 * 60 * 24))
 			const hours = Math.floor((remains % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
@@ -125,15 +125,12 @@
 		let effect = {
 
 			1: {
-				cl: '#78ec6c'
-			},
-			2: {
 				cl: '#a9f36a'
 			},
-			3: {
+			2: {
 				cl: '#ddf969'
 			},
-			4: {
+			3: {
 				cl: '#fefe69'
 			}
 		}
@@ -144,7 +141,7 @@
 			if(to > 0){
 				setTimeout(() => {
 					gr_ef()
-				},166)
+				},333)
 			}
 		}
 
