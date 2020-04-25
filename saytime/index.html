@@ -59,9 +59,9 @@
 	</footer>
 	<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script>
 	<script type="text/javascript">
-		let name = localStorage.name || '' //init var nama
-		if(window.location.search.substr(1) != '') { //if dpt nama
-			name = window.location.search.substr(1) //isi var nama dari local
+		let name = localStorage.name || ''
+		if(window.location.search.substr(1) != '') {
+			name = window.location.search.substr(1)
 			localStorage.name = window.location.search.substr(1)
 		}
 		let tema = {
