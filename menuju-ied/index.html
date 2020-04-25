@@ -4,7 +4,74 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<title>Menuju Idul Fitri</title>
-	<link rel="stylesheet" type="text/css" href="style.css">
+	<style type="text/css">
+		@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@800&display=swap');
+
+		* {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			font-family: system-ui, sans-serif;
+			color: #fff;
+			display: flex;
+			flex-direction: column;
+			justify-content: flex-end;
+			height: 100vh;
+		}
+
+		.container {
+			max-width: 1100px;
+			margin: 0 auto;
+			overflow: auto;
+		}
+
+		header {
+			flex: 1;
+			height: 100%;
+			display: flex;
+			background: url('wave.svg');
+			background-repeat: no-repeat;
+			background-size: cover;
+			align-items: center;
+			text-align: center;
+			justify-content: center;
+		}
+
+		header h1 {
+			font-size: 37px;
+			color: #3f3f3f;
+			font-family: 'Nunito', sans-serif;
+			text-shadow: 1.5px 1.5px #ddd;
+		}
+
+		.counters {
+			color: #3f3f3f;
+			padding: 50px 20px;
+			text-align: center;
+		}
+
+		.counters .container {
+			display: grid;
+			grid-gap: 30px;
+			grid-template-columns: repeat(4, 1fr);
+		}
+
+		.counters .counter {
+			font-size: 28px;
+			font-weight: 900;
+		}
+
+		@media(max-width: 700px) {
+			.counters .container {
+				grid-template-columns: repeat(2, 1fr);
+			}
+		}
+
+
+	</style>
 </head>
 <body>
 	<header>
@@ -33,6 +100,35 @@
 			</div>
 		</div>
 	</section>
-	<script type="text/javascript" src="script.js"></script>
+	<script type="text/javascript">
+		function countDif(remains) {
+			const days = Math.floor(remains / (1000 * 60 * 60 * 24))
+			const hours = Math.floor((remains % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+			const minutes = Math.floor((remains % (1000 * 60 * 60)) / (1000 * 60))
+			const seconds = Math.floor((remains % (1000 * 60) ) / 1000)
+
+			document.querySelector('#d').innerHTML = days < 10 ? "0"+days : days
+			document.querySelector('#h').innerHTML = hours < 10 ? "0"+hours : hours
+			document.querySelector('#m').innerHTML = minutes < 10 ? "0"+minutes : minutes
+			document.querySelector('#s').innerHTML = seconds < 10 ? "0"+seconds : seconds
+			
+		}
+		const dl = new Date("2020-05-23 23:59:59").getTime()
+		const main = () => {
+			var iv = setInterval(() => {
+				const now = new Date().getTime()
+				const remains = dl - now
+						
+				if(remains < 0){
+					clearInterval(iv)
+					document.querySelector('h1').innerHTML = "Selamat Hari Raya Idul Fitri"
+				}else{
+					countDif(remains)
+				}
+			}, 1000)
+		}
+
+		document.addEventListener("DOMContentLoaded",main)
+	</script>
 </body>
 </html>
